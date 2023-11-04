@@ -1,5 +1,6 @@
 import pygame 
 from tile import Tile
+from QOperators import *
 
 DECK_TOP = 550
 DECK_LEFT = 50
@@ -18,6 +19,7 @@ class Deck:
     
     def set_tiles(self):
         tile_spacing = (DECK_WIDTH - len(self.operators) * TILE_SIZE) / (len(self.operators) + 1)
+        self.tiles.clear()
         for i in range(len(self.operators)):
             self.tiles.append(Tile(self.operators[i], 
                                    [
