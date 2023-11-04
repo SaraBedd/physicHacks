@@ -36,7 +36,7 @@ game_started = run_main_menu()
 if game_started:
     dis.fill(BACKGROUND_COLOR)
     pygame.display.flip()
-    myCircuit = Circuit(4, 4, [], [])
+    myCircuit = Circuit(4, 4)
     myDeck = Deck([
         QOperators.HADAMARD,
         QOperators.PAULIX,

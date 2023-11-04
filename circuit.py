@@ -10,12 +10,13 @@ BOX_WIDTH = 30
 BOX_BACK_WIDTH = 60
 
 class Circuit:
-    def __init__(self, n_signals, n_columns, inputs, outputs):
+    def __init__(self, n_signals, n_columns):
         self.n_signals = n_signals
         self.n_columns = n_columns
         self.boxes = []
         self.gates = []
         self.set_boxes_shapes()
+
 
     def get_background_shape(self):
         return pygame.Rect(CIRCUIT_LEFT, CIRCUIT_TOP, CIRCUIT_MAX_X, CIRCUIT_MAX_Y)
