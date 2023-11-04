@@ -8,5 +8,3 @@ class QSignal:
         for i in self.operators:
             output = self.operators[i].get_output(output)
         return output
-
-        
