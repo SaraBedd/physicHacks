@@ -1,4 +1,5 @@
 import pygame
+from QOperators import *
 
 CIRCUIT_TOP = 150
 CIRCUIT_LEFT = 200
@@ -13,6 +14,8 @@ class Circuit:
         self.n_signals = n_signals
         self.n_columns = n_columns
         self.boxes = []
+        self.gates = []
+        self.set_boxes_shapes()
 
     def get_background_shape(self):
         return pygame.Rect(CIRCUIT_LEFT, CIRCUIT_TOP, CIRCUIT_MAX_X, CIRCUIT_MAX_Y)
@@ -36,7 +39,7 @@ class Circuit:
         return boxes_back
 
 
-    def get_boxes_shapes(self):
+    def set_boxes_shapes(self):
         boxes = []
         box_spacing = CIRCUIT_MAX_X / (self.n_columns + 1)
         wire_spacing = CIRCUIT_MAX_Y / (self.n_signals + 1)
@@ -50,8 +53,16 @@ class Circuit:
                         BOX_WIDTH
                         )
                     )
-        return boxes
+        self.boxes = boxes
+        self.gates = [QOperators.NOP for i in range(len(boxes))]
 
+
+    def draw_boxes(self, dis):
+        for i in range(len(self.boxes)):
+            if self.gates[i] == QOperators.NOP:
+                pygame.draw.rect(dis, (255, 255, 255), self.boxes[i])
+            else:
+                pygame.draw.rect(dis, OP_COLOR[self.gates[i]], self.boxes[i])
 
     def get_wire_shapes(self):
         shapes = []
@@ -66,9 +77,4 @@ class Circuit:
                     )
                 )
         return shapes
-
     
-    
-
-
-        
