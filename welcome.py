@@ -75,10 +75,11 @@ class MainMenu:
                     pygame.quit()
                     exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if self.about_button_rect.collidepoint(event.pos):
-                        self.show_about = not self.show_about
                     if self.start_button_rect.collidepoint(event.pos):
                         print("Start the game!")
+                        return True
+
+        return False
 
 if __name__ == "__main__":
     pygame.init()
