@@ -20,14 +20,14 @@ pygame.display.update()
 pygame.display.set_caption(GAME_NAME)
 game_over=False
 
-myCircuit = Circuit(5, 4, [], [])
+myCircuit = Circuit(4, 4, [], [])
 myDeck = Deck(["ok", "hey", "lol"])
 circRects = myCircuit.get_wire_shapes()
 back = myCircuit.get_background_shape()
 deckRects = myDeck.get_background_shape()
+boxesRects = myCircuit.get_boxes_shapes()
 myDeck.set_tiles()
-
-
+boxes_back = myCircuit.get_boxes_back_shape()
 
 
 while not game_over:
@@ -41,6 +41,12 @@ while not game_over:
     pygame.draw.rect(dis, (255, 0, 0), deckRects)
     for i in range(len(myDeck.tiles)):
         myDeck.tiles[i].draw(dis)
+
+    for i in range(len(boxes_back)):
+        pygame.draw.rect(dis, (255, 190, 40), boxes_back[i])
+
+    for i in range(len(boxesRects)):
+        pygame.draw.rect(dis, (255, 125, 0), boxesRects[i])
     pygame.display.flip()
  
 pygame.quit()
