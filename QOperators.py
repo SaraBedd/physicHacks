@@ -56,6 +56,16 @@ OP_ICON_IMAGE = {
 
 }
 
+TRANSLATE = {
+    QOperators.HADAMARD : "SNOT",
+    QOperators.PAULIX : "X",
+    QOperators.PAULIY : "Y",
+    QOperators.PAULIZ : "Z",
+    QOperators.SWAP : "SWAP",
+    QOperators.TOFFOLI : "TOFFOLI",
+    QOperators.CNOT : "CNOT"
+}
+
 def get_icon(op, number):
     if op == QOperators.HADAMARD:
         return OP_ICON_IMAGE[QOperators.HADAMARD]

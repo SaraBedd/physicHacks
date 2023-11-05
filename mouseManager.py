@@ -87,6 +87,6 @@ class MouseManager:
         self.selected_op = QOperators.NOP
         self.number_selects = 0
         self.modified_gates.clear()
-        self.level.generate_output()
+        self.level.generate_lines()
         
 

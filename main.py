@@ -97,6 +97,8 @@ if game_started:
             elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     mouseManager.reset()
+                elif event.key == K_RETURN :
+                    level.generate_output()
 
         pygame.draw.rect(dis, (121, 121, 121), back)
         for i in range(len(circRects)):
@@ -113,6 +115,7 @@ if game_started:
         myCircuit.draw_boxes(dis)
         level.draw_inputs(dis)
         level.draw_outputs(dis)
+        level.draw_outputs_actual(dis)
         
         for i in range(len(level.lines)):
             pygame.draw.rect(dis, (0, 0, 0), level.lines[i])

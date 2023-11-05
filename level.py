@@ -4,6 +4,7 @@ from circuit import BOX_WIDTH
 from deck import Deck
 import os
 from QOperators import *
+from Qcalc import *
 
 INPUT_SIZE = 40
 
@@ -90,7 +91,7 @@ class Level:
         output.append([])
         for i in range(len(self.circuit.orders)):
             if self.circuit.orders[i] == 1:
-                output[1].append([self.circuit.gates[i].name, [i % len(self.inputs)]])
+                output[1].append([TRANSLATE[self.circuit.gates[i]], [i % len(self.inputs)]])
         
         for i in range(len(self.circuit.orders)):
             if self.circuit.orders[i] == 2:
@@ -105,8 +106,53 @@ class Level:
                 for x in output[1]:
                     if x[0] == name:
                         x[1].append(i % len(self.inputs))
-        self.generate_lines()
-        print(output)
+
+        out = output_list(output[0], output[1])
+        self.actual_outputs = []
+        for x in out:
+            self.actual_outputs.append(out[x])
+
+    
+    def draw_outputs_actual(self, dis):
+        input_spacing = INPUTS_MAX_Y / (len(self.actual_outputs) + 1)
+        for i in range(len(self.actual_outputs)):
+            pygame.draw.rect(dis, ((50, 50, 50)), pygame.Rect(
+                70 + ACTUAL_OUT_LEFT + EXPECTED_OUT_MAX_X / 2 - INPUT_SIZE / 2,
+                ACTUAL_OUT_TOP + (i + 1) * input_spacing - INPUT_SIZE / 2,
+                INPUT_SIZE,
+                INPUT_SIZE
+            ))
+            font = pygame.font.SysFont(None, 20)
+            str_in = "1/√2 |0> + 1√2 |1>"
+            img = font.render(str_in , True, (50, 50, 50), (50, 50, 50))
+            dis.blit(img, (70 + ACTUAL_OUT_LEFT - 10,
+                    ACTUAL_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
+
+            if self.actual_outputs[i] == [1, 0]:
+                icon = self.zero_icon
+                dis.blit(icon, pygame.Rect(
+                70 + ACTUAL_OUT_LEFT + EXPECTED_OUT_MAX_X / 2 - INPUT_SIZE / 2,
+                ACTUAL_OUT_TOP + (i + 1) * input_spacing - INPUT_SIZE / 2,
+                INPUT_SIZE,
+                INPUT_SIZE
+                ))
+            elif self.actual_outputs[i] == [0, 1]: 
+                icon = self.one_icon
+                dis.blit(icon, pygame.Rect(
+                70 + ACTUAL_OUT_LEFT + EXPECTED_OUT_MAX_X / 2 - INPUT_SIZE / 2,
+                ACTUAL_OUT_TOP + (i + 1) * input_spacing - INPUT_SIZE / 2,
+                INPUT_SIZE,
+                INPUT_SIZE
+                ))
+            else:
+                font = pygame.font.SysFont(None, 20)
+                str_in = "1/√2 |0> + 1√2 |1>"
+                img = font.render(str_in , True, (0, 0, 0), (255, 255, 255))
+                dis.blit(img, (70 + ACTUAL_OUT_LEFT - 10,
+                        ACTUAL_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
+                continue
+                
+            
 
             
     def generate_lines(self):
