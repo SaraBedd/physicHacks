@@ -27,6 +27,35 @@ dis = pygame.display.set_mode((SCREEN_SIZE_X, SCREEN_SIZE_Y))
 pygame.display.set_caption(GAME_NAME)
 game_over = False
 
+def draw_beveled_rect(surface, rect, color, bevel_amount):
+    pygame.draw.rect(surface, color, rect)
+    highlight_color = [min(c + bevel_amount, 255) for c in color]
+    shadow_color = [max(c - bevel_amount, 0) for c in color]
+
+    pygame.draw.polygon(surface, highlight_color, [
+        rect.topleft, rect.topright,
+        (rect.topright[0], rect.topright[1] + bevel_amount),
+        (rect.topleft[0], rect.topleft[1] + bevel_amount)
+    ])
+
+    pygame.draw.polygon(surface, highlight_color, [
+        rect.topleft, rect.bottomleft,
+        (rect.bottomleft[0] + bevel_amount, rect.bottomleft[1]),
+        (rect.topleft[0] + bevel_amount, rect.topleft[1])
+    ])
+
+    pygame.draw.polygon(surface, shadow_color, [
+        rect.bottomleft, rect.bottomright,
+        (rect.bottomright[0], rect.bottomright[1] - bevel_amount),
+        (rect.bottomleft[0], rect.bottomleft[1] - bevel_amount)
+    ])
+
+    pygame.draw.polygon(surface, shadow_color, [
+        rect.topright, rect.bottomright,
+        (rect.bottomright[0] - bevel_amount, rect.bottomright[1]),
+        (rect.topright[0] - bevel_amount, rect.topright[1])
+    ])
+
 def run_main_menu():
     main_menu = MainMenu(dis)
     return main_menu.run()
@@ -66,7 +95,9 @@ if game_started:
         pygame.draw.rect(dis, (121, 121, 121), back)
         for i in range(len(circRects)):
             pygame.draw.rect(dis, (0, 255, 0), circRects[i])
-        pygame.draw.rect(dis, (255, 0, 0), deckRects)
+        deck_color = (50, 50, 50)
+        bevel_amount = 5
+        draw_beveled_rect(dis, deckRects, deck_color, bevel_amount)
         for i in range(len(myDeck.tiles)):
             myDeck.tiles[i].draw(dis)
 
