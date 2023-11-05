@@ -129,6 +129,21 @@ if game_started:
                     mouseManager.reset()
                 elif event.key == K_RETURN :
                     level.generate_output()
+                elif event.key == K_s:
+                    if curr_index < len(levels):
+                        curr_index = curr_index + 1
+                        level = levels[curr_index]
+                        mouseManager.reset()
+                        myCircuit = level.circuit
+                        myDeck = level.deck
+                    
+
+                        circRects = myCircuit.get_wire_shapes()
+                        back = myCircuit.get_background_shape()
+                        deckRects = myDeck.get_background_shape()
+                        myDeck.set_tiles()
+                        boxes_back = myCircuit.get_boxes_back_shape()
+                        mouseManager = MouseManager(level)
 
         if level.actual_outputs == level.outputs:
             if curr_index < len(levels):
@@ -145,6 +160,13 @@ if game_started:
                 myDeck.set_tiles()
                 boxes_back = myCircuit.get_boxes_back_shape()
                 mouseManager = MouseManager(level)
+        
+        str_in = "expected"
+        font = pygame.font.SysFont(None, 29)
+        img = font.render(str_in , True, (0, 129, 112), BACKGROUND_COLOR)
+        dis.blit(img, (900, 150))
+
+        pygame.draw.rect(dis, (0, 129, 112), pygame.Rect(895, 170, 100, 250), 2, 20)
 
         pygame.draw.rect(dis, (35, 45, 63), back)
         for i in range(len(circRects)):

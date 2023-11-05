@@ -50,7 +50,7 @@ class Level:
             else:
                 font = pygame.font.SysFont(None, 20)
                 str_in = "1/√2 |0> + 1√2 |1>"
-                img = font.render(str_in , True, (255, 255, 255), (0, 0, 0))
+                img = font.render(str_in , True, (255, 255, 255), (15, 15, 15))
                 dis.blit(img, (INPUTS_LEFT - 10,
                         INPUTS_TOP + (i + 1) * input_spacing - img.get_height() / 2))
                 continue
@@ -71,7 +71,7 @@ class Level:
             elif self.outputs[i] == [0, 1]: 
                 icon = self.one_icon
             else:
-                font = pygame.font.SysFont(None, 22)
+                font = pygame.font.SysFont(None, 20)
                 str_in = "1/√2 |0> + 1√2 |1>"
                 if self.outputs[i] == [0.7, -0.7]:
                     str_in = "1/√2 |0> - 1√2 |1>"
@@ -79,8 +79,8 @@ class Level:
                     str_in = "-1/√2 |0> + 1√2 |1>"
                 elif self.outputs[i] == [-0.7, -0.7]:
                     str_in = "-1/√2 |0> - 1√2 |1>"
-                img = font.render(str_in , True, (255, 255, 255), (0, 0, 0))
-                dis.blit(img, (EXPECTED_OUT_LEFT - 12,
+                img = font.render(str_in , True, (255, 255, 255), (15, 15, 15))
+                dis.blit(img, (EXPECTED_OUT_LEFT - 10,
                         EXPECTED_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
                 continue
                 
@@ -152,7 +152,7 @@ class Level:
             else:
                 font = pygame.font.SysFont(None, 22)
                 str_in = "1/√2 |0> + 1√2 |1>"
-                img = font.render(str_in , True, (255, 255, 255), (0, 0, 0))
+                img = font.render(str_in , True, (255, 255, 255), (15, 15, 15))
                 dis.blit(img, (70 + ACTUAL_OUT_LEFT - 10,
                         ACTUAL_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
                 continue
