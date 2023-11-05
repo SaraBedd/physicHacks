@@ -6,7 +6,7 @@ import os
 from QOperators import *
 from Qcalc import *
 
-INPUT_SIZE = 40
+INPUT_SIZE = 60
 
 INPUTS_TOP = 150
 INPUTS_LEFT = 100
@@ -50,7 +50,7 @@ class Level:
             else:
                 font = pygame.font.SysFont(None, 20)
                 str_in = "1/√2 |0> + 1√2 |1>"
-                img = font.render(str_in , True, (0, 0, 0), (255, 255, 255))
+                img = font.render(str_in , True, (255, 255, 255), (0, 0, 0))
                 dis.blit(img, (INPUTS_LEFT - 10,
                         INPUTS_TOP + (i + 1) * input_spacing - img.get_height() / 2))
                 continue
@@ -71,10 +71,16 @@ class Level:
             elif self.outputs[i] == [0, 1]: 
                 icon = self.one_icon
             else:
-                font = pygame.font.SysFont(None, 20)
+                font = pygame.font.SysFont(None, 22)
                 str_in = "1/√2 |0> + 1√2 |1>"
-                img = font.render(str_in , True, (0, 0, 0), (255, 255, 255))
-                dis.blit(img, (EXPECTED_OUT_LEFT - 10,
+                if self.outputs[i] == [0.7, -0.7]:
+                    str_in = "1/√2 |0> - 1√2 |1>"
+                elif self.outputs[i] == [-0.7, 0.7]:
+                    str_in = "-1/√2 |0> + 1√2 |1>"
+                elif self.outputs[i] == [-0.7, -0.7]:
+                    str_in = "-1/√2 |0> - 1√2 |1>"
+                img = font.render(str_in , True, (255, 255, 255), (0, 0, 0))
+                dis.blit(img, (EXPECTED_OUT_LEFT - 12,
                         EXPECTED_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
                 continue
                 
@@ -110,23 +116,22 @@ class Level:
         out = output_list(output[0], output[1])
         self.actual_outputs = []
         for x in out:
+            if out[x][0] > 0 and out[x][0] < 1:
+                out[x][0] = 0.7
+            if out[x][1] > 0 and out[x][1] < 1:
+                out[x][1] = 0.7
+            if out[x][0] < 0:
+                out[x][0] = -0.7
+            if out[x][1] < 0:
+                out[x][1] = -0.7
             self.actual_outputs.append(out[x])
+            print(out[x])
 
     
     def draw_outputs_actual(self, dis):
         input_spacing = INPUTS_MAX_Y / (len(self.actual_outputs) + 1)
         for i in range(len(self.actual_outputs)):
-            pygame.draw.rect(dis, ((50, 50, 50)), pygame.Rect(
-                70 + ACTUAL_OUT_LEFT + EXPECTED_OUT_MAX_X / 2 - INPUT_SIZE / 2,
-                ACTUAL_OUT_TOP + (i + 1) * input_spacing - INPUT_SIZE / 2,
-                INPUT_SIZE,
-                INPUT_SIZE
-            ))
-            font = pygame.font.SysFont(None, 20)
-            str_in = "1/√2 |0> + 1√2 |1>"
-            img = font.render(str_in , True, (50, 50, 50), (50, 50, 50))
-            dis.blit(img, (70 + ACTUAL_OUT_LEFT - 10,
-                    ACTUAL_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
+            
 
             if self.actual_outputs[i] == [1, 0]:
                 icon = self.zero_icon
@@ -145,9 +150,9 @@ class Level:
                 INPUT_SIZE
                 ))
             else:
-                font = pygame.font.SysFont(None, 20)
+                font = pygame.font.SysFont(None, 22)
                 str_in = "1/√2 |0> + 1√2 |1>"
-                img = font.render(str_in , True, (0, 0, 0), (255, 255, 255))
+                img = font.render(str_in , True, (255, 255, 255), (0, 0, 0))
                 dis.blit(img, (70 + ACTUAL_OUT_LEFT - 10,
                         ACTUAL_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
                 continue

@@ -12,7 +12,7 @@ SCREEN_SIZE_X = 1000
 SCREEN_SIZE_Y = 700
 GAME_NAME = "QWANDLE"
 
-BACKGROUND_COLOR = (50, 50, 50)
+BACKGROUND_COLOR = (15, 15, 15)
 
 HEADER_SIZE_X = SCREEN_SIZE_X
 HEADER_SIZE_Y = 100
@@ -64,14 +64,44 @@ def run_main_menu():
 game_started = run_main_menu()
 
 if game_started:
-    level = Level([[0.7, 0.7], [0, 1], [1, 0], [1, 0]], [[1, 0], [1, 0], [1, 1], [0, 1]], [
-        QOperators.HADAMARD,
-        QOperators.PAULIX,
-        QOperators.CNOT,
-        QOperators.SWAP,
-        QOperators.PAULIZ,
-        QOperators.TOFFOLI
-    ], 3)
+    levels = [
+        Level([[1, 0]], [[0, 1]], [
+            QOperators.PAULIZ,
+            QOperators.PAULIX,
+            QOperators.PAULIY
+        ], 1), 
+        Level([[1, 0], [0, 1]], [[0.7, -0.7], [0, 1]], [
+            QOperators.HADAMARD, 
+            QOperators.CNOT, 
+            QOperators.PAULIX,
+            QOperators.PAULIY, 
+            QOperators.SWAP
+        ], 2),
+        Level([[1, 0], [0, 1], [1, 0]], [[1, 0], [0, 1], [0, 1]], [
+            QOperators.HADAMARD, 
+            QOperators.CNOT, 
+            QOperators.PAULIZ,
+            QOperators.SWAP, 
+            QOperators.PAULIY
+        ], 3),
+        Level([[0, 1], [0, 1], [1, 0], [0, 1]], [[0, 1], [0.7, -0.7], [0, 1], [1, 0]], [
+            QOperators.HADAMARD, 
+            QOperators.CNOT, 
+            QOperators.PAULIZ,
+            QOperators.PAULIX, 
+            QOperators.SWAP
+        ], 3),
+        Level([[0, 1], [0, 1], [1, 0], [0, 1], [0, 1], [0, 1]], [[0.7, 0.7], [0.7, 0.7], [0, 1], [0, 1], [0, 1], [0, 1]], [
+            QOperators.HADAMARD, 
+            QOperators.CNOT, 
+            QOperators.PAULIZ,
+            QOperators.PAULIX, 
+            QOperators.SWAP
+        ], 6),
+    ]
+
+    curr_index = 0
+    level = levels[curr_index]
 
     dis.fill(BACKGROUND_COLOR)
     pygame.display.flip()
@@ -100,9 +130,25 @@ if game_started:
                 elif event.key == K_RETURN :
                     level.generate_output()
 
-        pygame.draw.rect(dis, (121, 121, 121), back)
+        if level.actual_outputs == level.outputs:
+            if curr_index < len(levels):
+                curr_index = curr_index + 1
+                level = levels[curr_index]
+                mouseManager.reset()
+                myCircuit = level.circuit
+                myDeck = level.deck
+                
+
+                circRects = myCircuit.get_wire_shapes()
+                back = myCircuit.get_background_shape()
+                deckRects = myDeck.get_background_shape()
+                myDeck.set_tiles()
+                boxes_back = myCircuit.get_boxes_back_shape()
+                mouseManager = MouseManager(level)
+
+        pygame.draw.rect(dis, (35, 45, 63), back)
         for i in range(len(circRects)):
-            pygame.draw.rect(dis, (0, 255, 0), circRects[i])
+            pygame.draw.rect(dis, (0, 91, 65), circRects[i])
         deck_color = (50, 50, 50)
         bevel_amount = 5
         draw_beveled_rect(dis, deckRects, deck_color, bevel_amount)
@@ -110,7 +156,7 @@ if game_started:
             myDeck.tiles[i].draw(dis)
 
         for i in range(len(boxes_back)):
-            pygame.draw.rect(dis, (255, 190, 40), boxes_back[i], width=2, border_radius=10)
+            pygame.draw.rect(dis, (0, 129, 112), boxes_back[i], width=2, border_radius=10)
 
         myCircuit.draw_boxes(dis)
         level.draw_inputs(dis)
@@ -119,7 +165,9 @@ if game_started:
         
         for i in range(len(level.lines)):
             pygame.draw.rect(dis, (0, 0, 0), level.lines[i])
+
         pygame.display.flip()
+        dis.fill(BACKGROUND_COLOR)
         clock.tick(30)
 
     pygame.quit()
