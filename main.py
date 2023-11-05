@@ -70,7 +70,7 @@ if game_started:
             QOperators.PAULIX,
             QOperators.PAULIY
         ], 1), 
-        Level([[1, 0], [0, 1]], [[0.7, -0.7], [0, 1]], [
+        Level([[1, 0], [0, 1]], [[0.7, 0.7], [0, 1]], [
             QOperators.HADAMARD, 
             QOperators.CNOT, 
             QOperators.PAULIX,
