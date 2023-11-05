@@ -82,6 +82,7 @@ if game_started:
             QOperators.CNOT, 
             QOperators.PAULIZ,
             QOperators.SWAP, 
+            QOperators.HADAMARD, 
             QOperators.PAULIY
         ], 3),
         Level([[0, 1], [0, 1], [1, 0], [0, 1]], [[0, 1], [0.7, -0.7], [0, 1], [1, 0]], [
@@ -95,8 +96,10 @@ if game_started:
             QOperators.HADAMARD, 
             QOperators.CNOT, 
             QOperators.PAULIZ,
+            QOperators.TOFFOLI,
             QOperators.PAULIX, 
-            QOperators.SWAP
+            QOperators.SWAP, 
+            QOperators.TOFFOLI
         ], 6),
     ]
 
