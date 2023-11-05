@@ -31,6 +31,7 @@ class Level:
         self.gates = gates
         self.nb_columns = nb_columns
         self.actual_outputs = self.inputs
+        self.show_outputs = False
 
         self.circuit = Circuit(len(self.inputs), self.nb_columns)
         self.deck = Deck(gates)
@@ -125,10 +126,12 @@ class Level:
             if out[x][1] < 0:
                 out[x][1] = -0.7
             self.actual_outputs.append(out[x])
-            print(out[x])
+            self.show_outputs = True
 
     
     def draw_outputs_actual(self, dis):
+        if not(self.show_outputs):
+            return
         input_spacing = INPUTS_MAX_Y / (len(self.actual_outputs) + 1)
         for i in range(len(self.actual_outputs)):
             
