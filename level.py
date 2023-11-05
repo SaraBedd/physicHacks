@@ -1,5 +1,6 @@
 import pygame
 from circuit import Circuit
+from circuit import BOX_WIDTH
 from deck import Deck
 import os
 from QOperators import *
@@ -34,6 +35,7 @@ class Level:
         self.deck = Deck(gates)
         self.zero_icon = pygame.transform.scale(pygame.image.load(os.path.join('assets/icons', "0_icon.png")), (INPUT_SIZE, INPUT_SIZE))
         self.one_icon = pygame.transform.scale(pygame.image.load(os.path.join('assets/icons', "1_icon.png")), (INPUT_SIZE, INPUT_SIZE))
+        self.lines = []
 
     
     def draw_inputs(self, dis):
@@ -74,27 +76,46 @@ class Level:
         output.append([])
         for i in range(len(self.circuit.orders)):
             if self.circuit.orders[i] == 1:
-                output[1].append([self.circuit.gates[i].name, i % len(self.inputs)])
+                output[1].append([self.circuit.gates[i].name, [i % len(self.inputs)]])
         
         for i in range(len(self.circuit.orders)):
             if self.circuit.orders[i] == 2:
                 name = self.circuit.gates[i].name
                 for x in output[1]:
                     if x[0] == name:
-                        x.append(i % len(self.inputs))
+                        x[1].append(i % len(self.inputs))
         
         for i in range(len(self.circuit.orders)):
             if self.circuit.orders[i] == 3:
                 name = self.circuit.gates[i].name
                 for x in output[1]:
                     if x[0] == name:
-                        x.append(i % len(self.inputs))
-
+                        x[1].append(i % len(self.inputs))
+        self.generate_lines()
         print(output)
 
             
-
-
+    def generate_lines(self):
+        self.lines = []
+        for i in range(len(self.circuit.gates)):
+            if self.circuit.gates[i] != QOperators.NOP:
+                pos = self.circuit.boxes[i].left
+                for j in range(len(self.circuit.gates)):
+                    if i != j and self.circuit.boxes[j].left == pos:
+                        if self.circuit.gates[j] != QOperators.NOP:
+                            top = self.circuit.boxes[j].top
+                            bottom = self.circuit.boxes[i].top
+                            if i < j: 
+                                top = self.circuit.boxes[i].top
+                                bottom = self.circuit.boxes[j].top
+                            
+                            self.lines.append(pygame.Rect(
+                                pos + BOX_WIDTH / 2,
+                                top + BOX_WIDTH / 2,
+                                1,
+                                bottom - top
+                                ))
+            
 
 
         

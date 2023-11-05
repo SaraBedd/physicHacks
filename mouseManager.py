@@ -70,7 +70,6 @@ class MouseManager:
                         break
                         
                 self.reset()
-        print(self.circuit.orders)
 
     
     def undo_change(self):

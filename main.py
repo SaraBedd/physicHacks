@@ -113,7 +113,9 @@ if game_started:
         myCircuit.draw_boxes(dis)
         level.draw_inputs(dis)
         level.draw_outputs(dis)
-
+        
+        for i in range(len(level.lines)):
+            pygame.draw.rect(dis, (0, 0, 0), level.lines[i])
         pygame.display.flip()
         clock.tick(30)
 
