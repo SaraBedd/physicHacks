@@ -42,9 +42,9 @@ class Level:
         input_spacing = INPUTS_MAX_Y / (len(self.inputs) + 1)
         for i in range(len(self.inputs)):
             icon = ''
-            if self.inputs[i] == 0:
+            if self.inputs[i] == [1, 0]:
                 icon = self.zero_icon
-            else: 
+            elif self.inputs[i] == [0, 1]: 
                 icon = self.one_icon
 
             dis.blit(icon, pygame.Rect(
@@ -58,9 +58,9 @@ class Level:
         input_spacing = INPUTS_MAX_Y / (len(self.outputs) + 1)
         for i in range(len(self.outputs)):
             icon = ''
-            if self.outputs[i] == 0:
+            if self.outputs[i] == [1, 0]:
                 icon = self.zero_icon
-            else: 
+            elif self.outputs[i] == [0, 1]: 
                 icon = self.one_icon
 
             dis.blit(icon, pygame.Rect(
