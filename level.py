@@ -9,7 +9,7 @@ INPUT_SIZE = 40
 
 INPUTS_TOP = 150
 INPUTS_LEFT = 100
-INPUTS_MAX_X = 100
+INPUTS_MAX_X = 150
 INPUTS_MAX_Y = 300
 
 ACTUAL_OUT_TOP = 150
@@ -46,6 +46,13 @@ class Level:
                 icon = self.zero_icon
             elif self.inputs[i] == [0, 1]: 
                 icon = self.one_icon
+            else:
+                font = pygame.font.SysFont(None, 20)
+                str_in = "1/√2 |0> + 1√2 |1>"
+                img = font.render(str_in , True, (0, 0, 0), (255, 255, 255))
+                dis.blit(img, (INPUTS_LEFT - 10,
+                        INPUTS_TOP + (i + 1) * input_spacing - img.get_height() / 2))
+                continue
 
             dis.blit(icon, pygame.Rect(
             INPUTS_LEFT + INPUTS_MAX_X / 2 - INPUT_SIZE / 2,
@@ -62,7 +69,14 @@ class Level:
                 icon = self.zero_icon
             elif self.outputs[i] == [0, 1]: 
                 icon = self.one_icon
-
+            else:
+                font = pygame.font.SysFont(None, 20)
+                str_in = "1/√2 |0> + 1√2 |1>"
+                img = font.render(str_in , True, (0, 0, 0), (255, 255, 255))
+                dis.blit(img, (EXPECTED_OUT_LEFT - 10,
+                        EXPECTED_OUT_TOP + (i + 1) * input_spacing - img.get_height() / 2))
+                continue
+                
             dis.blit(icon, pygame.Rect(
             EXPECTED_OUT_LEFT + EXPECTED_OUT_MAX_X / 2 - INPUT_SIZE / 2,
             EXPECTED_OUT_TOP + (i + 1) * input_spacing - INPUT_SIZE / 2,

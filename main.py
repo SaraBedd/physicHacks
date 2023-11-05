@@ -64,14 +64,14 @@ def run_main_menu():
 game_started = run_main_menu()
 
 if game_started:
-    level = Level([[1, 0], [0, 1], [1, 0], [1, 0]], [[1, 0], [1, 0], [0, 1], [0, 1]], [
+    level = Level([[0.7, 0.7], [0, 1], [1, 0], [1, 0]], [[1, 0], [1, 0], [1, 1], [0, 1]], [
         QOperators.HADAMARD,
         QOperators.PAULIX,
         QOperators.CNOT,
         QOperators.SWAP,
         QOperators.PAULIZ,
         QOperators.TOFFOLI
-    ], 4)
+    ], 3)
 
     dis.fill(BACKGROUND_COLOR)
     pygame.display.flip()
