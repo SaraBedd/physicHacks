@@ -5,6 +5,7 @@ from deck import Deck
 from QOperators import *
 from mouseManager import MouseManager
 from welcome import *
+from level import Level
 
 # Constants
 SCREEN_SIZE_X = 1000
@@ -63,23 +64,28 @@ def run_main_menu():
 game_started = run_main_menu()
 
 if game_started:
-    dis.fill(BACKGROUND_COLOR)
-    pygame.display.flip()
-    myCircuit = Circuit(4, 4)
-    myDeck = Deck([
+    level = Level([1, 0, 1, 1], [1, 1, 1, 1], [
         QOperators.HADAMARD,
         QOperators.PAULIX,
         QOperators.CNOT,
         QOperators.SWAP,
-        QOperators.PAULIZ
-    ])
+        QOperators.PAULIZ,
+        QOperators.TOFFOLI
+    ], 4)
+
+    dis.fill(BACKGROUND_COLOR)
+    pygame.display.flip()
+    myCircuit = level.circuit
+    myDeck = level.deck
+    
 
     circRects = myCircuit.get_wire_shapes()
     back = myCircuit.get_background_shape()
     deckRects = myDeck.get_background_shape()
     myDeck.set_tiles()
     boxes_back = myCircuit.get_boxes_back_shape()
-    mouseManager = MouseManager(myDeck, myCircuit)
+    mouseManager = MouseManager(level)
+    
 
     while not game_over:
         for event in pygame.event.get():
@@ -105,6 +111,8 @@ if game_started:
             pygame.draw.rect(dis, (255, 190, 40), boxes_back[i], width=2, border_radius=10)
 
         myCircuit.draw_boxes(dis)
+        level.draw_inputs(dis)
+        level.draw_outputs(dis)
 
         pygame.display.flip()
         clock.tick(30)

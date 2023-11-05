@@ -1,5 +1,6 @@
 import pygame
 from QOperators import *
+import os
 
 TILE_SIZE_X = 80
 TILE_SIZE_Y = 80
@@ -10,6 +11,8 @@ class Tile:
         self.operation = operation
         self.pos = pos
         self.selected = False
+        self.icon = pygame.transform.scale(pygame.image.load(os.path.join('assets/icons', OP_ICON[self.operation])), (TILE_SIZE_X, TILE_SIZE_Y))
+
 
     def draw(self, dis):
         if self.selected:
@@ -19,7 +22,8 @@ class Tile:
                 TILE_SIZE_X + 2 * BORDER_WIDTH,
                 TILE_SIZE_Y + 2 * BORDER_WIDTH
             ), width=BORDER_WIDTH)
-        pygame.draw.rect(dis, OP_COLOR[self.operation], pygame.Rect(
+        
+        dis.blit(self.icon, pygame.Rect(
             self.pos[0],
             self.pos[1],
             TILE_SIZE_X,

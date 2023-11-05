@@ -1,5 +1,6 @@
 import pygame
 from QOperators import *
+import os
 
 CIRCUIT_TOP = 150
 CIRCUIT_LEFT = 200
@@ -15,6 +16,7 @@ class Circuit:
         self.n_columns = n_columns
         self.boxes = []
         self.gates = []
+        self.orders = [0 for i in range(n_signals * n_columns)]
         self.set_boxes_shapes()
 
 
@@ -63,7 +65,7 @@ class Circuit:
             if self.gates[i] == QOperators.NOP:
                 pygame.draw.rect(dis, (255, 255, 255), self.boxes[i])
             else:
-                pygame.draw.rect(dis, OP_COLOR[self.gates[i]], self.boxes[i])
+                dis.blit(pygame.transform.scale(get_icon(self.gates[i], self.orders[i]), (BOX_WIDTH, BOX_WIDTH)), self.boxes[i])
 
     def get_wire_shapes(self):
         shapes = []
